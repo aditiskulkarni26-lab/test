@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Investment Mutual Fund CRUD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin-right: 8px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+        th, td { padding: 8px; border: 1px solid #ccc; }
+        a { margin-right: 12px; }
+    </style>
+</head>
+
+<body ng-controller="InvestmentMutualFundCtrl">
+    <a href="index.html">Home</a>
+    <h1>Investment Mutual Fund CRUD</h1>
+
+    <h2>Add / Update Fund</h2>
+    <form ng-submit="saveInvestmentMutualFund()">
+        <input type="text" ng-model="investmentMutualFund.mutualfund_name" placeholder="Fund Name" required>
+        <input type="text" ng-model="investmentMutualFund.mutualfund_category" placeholder="Category">
+        <input type="number" ng-model="investmentMutualFund.amount_invested" placeholder="Amount Invested">
+        <input type="number" ng-model="investmentMutualFund.amount_earned" placeholder="Amount Earned">
+        <input type="number" ng-model="investmentMutualFund.interest_earned" placeholder="Interest Earned">
+        <input type="date" ng-model="investmentMutualFund.purchased_date" placeholder="Purchased Date">
+        <button type="submit">{[{ investmentMutualFund.id ? 'Update' : 'Add' }]}</button>
+    </form>
+
+    <hr>
+
+    <h2>Mutual Fund List</h2>
+    <div id="debug">Open browser console to see logs.</div>
+    <table>
+        <tr>
+            <th>Name</th><th>Category</th><th>Invested</th><th>Earned</th><th>Interest</th><th>Purchased</th><th>Actions</th>
+        </tr>
+        <tr ng-repeat="m in investmentMutualFunds">
+            <td>{[{m.mutualfund_name}]}</td>
+            <td>{[{m.mutualfund_category}]}</td>
+            <td>{[{m.amount_invested}]}</td>
+            <td>{[{m.amount_earned}]}</td>
+            <td>{[{m.interest_earned}]}</td>
+            <td>{[{m.purchased_date}]}</td>
+            <td>
+                <button ng-click="editInvestmentMutualFund(m)">Edit</button>
+                <button ng-click="deleteInvestmentMutualFund(m.id)">Delete</button>
+            </td>
+        </tr>
+        <tr ng-if="!investmentMutualFunds || investmentMutualFunds.length==0">
+            <td colspan="7">No mutual funds found.</td>
+        </tr>
+    </table>
+</body>
+</html>

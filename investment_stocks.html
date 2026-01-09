@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Investment Stocks CRUD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin-right: 8px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+        th, td { padding: 8px; border: 1px solid #ccc; }
+        a { margin-right: 12px; }
+    </style>
+</head>
+
+<body ng-controller="InvestmentStocksCtrl">
+    <a href="index.html">Home</a>
+    <h1>Investment Stocks CRUD</h1>
+
+    <h2>Add / Update Stocks</h2>
+    <form ng-submit="saveInvestmentStock()">
+        <input type="text" ng-model="investmentStock.stocks_name" placeholder="Stock Name" required>
+        <input type="number" ng-model="investmentStock.stocks_qty" placeholder="Quantity">
+        <input type="number" ng-model="investmentStock.stocks_amount" placeholder="Amount">
+        <input type="number" ng-model="investmentStock.amount_earned" placeholder="Amount Earned">
+        <input type="number" ng-model="investmentStock.interest_earned" placeholder="Interest Earned">
+        <input type="date" ng-model="investmentStock.purchased_date" placeholder="Purchased Date">
+        <button type="submit">{[{ investmentStock.id ? 'Update' : 'Add' }]}</button>
+    </form>
+
+    <hr>
+
+    <h2>Stocks List</h2>
+    <div id="debug">Open browser console to see logs.</div>
+    <table>
+        <tr>
+            <th>Name</th><th>Qty</th><th>Amount</th><th>Earned</th><th>Interest</th><th>Purchased</th><th>Actions</th>
+        </tr>
+        <tr ng-repeat="s in investmentStocks">
+            <td>{[{s.stocks_name}]}</td>
+            <td>{[{s.stocks_qty}]}</td>
+            <td>{[{s.stocks_amount}]}</td>
+            <td>{[{s.amount_earned}]}</td>
+            <td>{[{s.interest_earned}]}</td>
+            <td>{[{s.purchased_date}]}</td>
+            <td>
+                <button ng-click="editInvestmentStock(s)">Edit</button>
+                <button ng-click="deleteInvestmentStock(s.id)">Delete</button>
+            </td>
+        </tr>
+        <tr ng-if="!investmentStocks || investmentStocks.length==0">
+            <td colspan="7">No stocks found.</td>
+        </tr>
+    </table>
+</body>
+</html>

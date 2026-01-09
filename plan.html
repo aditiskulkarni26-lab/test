@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plan CRUD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin-right: 8px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+        th, td { padding: 8px; border: 1px solid #ccc; }
+        a { margin-right: 12px; }
+    </style>
+</head>
+
+<body ng-controller="PlanCtrl">
+    <a href="index.html">Home</a>
+    <h1>Plan CRUD</h1>
+
+    <h2>Add / Update Plan</h2>
+    <form ng-submit="savePlan()">
+        <input type="text" ng-model="plan.plan_name" placeholder="Plan Name" required>
+        <input type="text" ng-model="plan.price" placeholder="Price">
+        <input type="date" ng-model="plan.purchased_date" placeholder="Purchased Date">
+        <input type="date" ng-model="plan.validation_date" placeholder="Validation Date">
+        <button type="submit">{[{ plan.id ? 'Update' : 'Add' }]}</button>
+    </form>
+
+    <hr>
+
+    <h2>Plan List</h2>
+    <div id="debug">Open browser console to see logs.</div>
+    <table>
+        <tr>
+            <th>Name</th><th>Price</th><th>Purchased</th><th>Validation</th><th>Actions</th>
+        </tr>
+        <tr ng-repeat="p in plans">
+            <td>{[{p.plan_name}]}</td>
+            <td>{[{p.price}]}</td>
+            <td>{[{p.purchased_date}]}</td>
+            <td>{[{p.validation_date}]}</td>
+            <td>
+                <button ng-click="editPlan(p)">Edit</button>
+                <button ng-click="deletePlan(p.id)">Delete</button>
+            </td>
+        </tr>
+        <tr ng-if="!plans || plans.length==0">
+            <td colspan="5">No plans found.</td>
+        </tr>
+    </table>
+</body>
+</html>

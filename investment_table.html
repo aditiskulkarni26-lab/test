@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Investment Table CRUD</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin-right: 8px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+        th, td { padding: 8px; border: 1px solid #ccc; }
+        a { margin-right: 12px; }
+    </style>
+</head>
+
+<body ng-controller="InvestmentTableCtrl">
+    <a href="index.html">Home</a>
+    <h1>Investment Table CRUD</h1>
+
+    <h2>Add / Update Investment</h2>
+    <form ng-submit="saveInvestmentTable()">
+        <input type="text" ng-model="investmentTable.investment_type" placeholder="Investment Type" required>
+        <input type="number" ng-model="investmentTable.amount_invested" placeholder="Amount Invested">
+        <input type="number" ng-model="investmentTable.amount_earned" placeholder="Amount Earned">
+        <input type="text" ng-model="investmentTable.total_interest_earned" placeholder="Total Interest Earned">
+        <input type="date" ng-model="investmentTable.purchased_date" placeholder="Purchased Date">
+        <button type="submit">{[{ investmentTable.id ? 'Update' : 'Add' }]}</button>
+    </form>
+
+    <hr>
+
+    <h2>Investment List</h2>
+    <div id="debug">Open browser console to see logs.</div>
+    <table>
+        <tr>
+            <th>Type</th><th>Invested</th><th>Earned</th><th>Interest</th><th>Purchased</th><th>Actions</th>
+        </tr>
+        <tr ng-repeat="t in investmentTables">
+            <td>{[{t.investment_type}]}</td>
+            <td>{[{t.amount_invested}]}</td>
+            <td>{[{t.amount_earned}]}</td>
+            <td>{[{t.total_interest_earned}]}</td>
+            <td>{[{t.purchased_date}]}</td>
+            <td>
+                <button ng-click="editInvestmentTable(t)">Edit</button>
+                <button ng-click="deleteInvestmentTable(t.id)">Delete</button>
+            </td>
+        </tr>
+        <tr ng-if="!investmentTables || investmentTables.length==0">
+            <td colspan="6">No investments found.</td>
+        </tr>
+    </table>
+</body>
+</html>
